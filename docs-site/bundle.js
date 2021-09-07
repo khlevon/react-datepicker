@@ -15659,8 +15659,7 @@
     },
     /* 53 */
     /***/ function(module, exports) {
-      module.exports
-      /**
+      module.exports = /**
        * Known issues:
        *
        * - invalid hex string literals will be recognized as a double quoted strings
@@ -15674,7 +15673,7 @@
        *
        * - special token sequence rule is not strictly following D grammar (anything following #line
        *   up to the end of line is matched as special token sequence)
-       */ = function(hljs) {
+       */ function(hljs) {
         /**
          * Language keywords
          *
@@ -19615,7 +19614,8 @@
     },
     /* 87 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // TODO support filter tags like :javascript, support inline HTML
+      module.exports = function(hljs) {
+        // TODO support filter tags like :javascript, support inline HTML
         return {
           case_insensitive: true,
           contains: [
@@ -29709,7 +29709,8 @@
     },
     /* 150 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) { // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
+      module.exports = function(hljs) {
+        // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
         var STRINGS = {
           // PB IDE color: #0080FF (Azure Radiance)
           className: "string",
