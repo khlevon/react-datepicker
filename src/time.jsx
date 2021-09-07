@@ -102,7 +102,7 @@ export default class Time extends React.Component {
       this.props.injectTimes.sort(function(a, b) {
         return a - b;
       });
-    for (let i = 0; i < multiplier; i++) {
+    for (let i = 0; i <= multiplier; i++) {
       const currentTime = addMinutes(cloneDate(base), i * intervals);
       times.push(currentTime);
 
