@@ -65,6 +65,7 @@ export default class Calendar extends React.Component {
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     locale: PropTypes.string,
+    timezone: PropTypes.string,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
     monthsShown: PropTypes.number,
@@ -536,6 +537,7 @@ export default class Calendar extends React.Component {
           format={this.props.timeFormat}
           includeTimes={this.props.includeTimes}
           intervals={this.props.timeIntervals}
+          timezone={this.props.timezone}
           minTime={this.props.minTime}
           maxTime={this.props.maxTime}
           excludeTimes={this.props.excludeTimes}

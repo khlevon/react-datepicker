@@ -84,6 +84,7 @@ export default class DatePicker extends React.Component {
     injectTimes: PropTypes.array,
     inline: PropTypes.bool,
     isClearable: PropTypes.bool,
+    timezone: PropTypes.string,
     locale: PropTypes.string,
     maxDate: PropTypes.object,
     minDate: PropTypes.object,
@@ -381,10 +382,12 @@ export default class DatePicker extends React.Component {
     const selected = this.props.selected
       ? this.props.selected
       : this.getPreSelection();
-    let changedDate = setTime(cloneDate(selected), {
-      hour: getHour(time),
-      minute: getMinute(time)
-    });
+    let changedDate = cloneDate(time);
+
+    // let changedDate = setTime(cloneDate(selected), {
+    //   hour: getHour(time),
+    //   minute: getMinute(time),
+    // });
 
     this.setState({
       preSelection: changedDate
@@ -508,6 +511,7 @@ export default class DatePicker extends React.Component {
         onSelect={this.handleSelect}
         onWeekSelect={this.props.onWeekSelect}
         openToDate={this.props.openToDate}
+        timezone={this.props.timezone}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         selectsStart={this.props.selectsStart}

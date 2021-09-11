@@ -95,7 +95,7 @@ export default class Time extends React.Component {
     const activeTime = this.props.selected ? this.props.selected : newDate();
     const currH = getHour(activeTime);
     const currM = getMinute(activeTime);
-    let base = getStartOfDay(newDate());
+    let base = getStartOfDay(newDate(undefined, this.props.timezone));
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&

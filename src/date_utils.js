@@ -46,8 +46,14 @@ function isSame(date1, date2, unit) {
 
 // ** Date Constructors **
 
-export function newDate(point) {
-  return moment(point);
+export function newDate(point, timezone = undefined) {
+  let d = moment(point);
+
+  if (timezone) {
+    d = d.tz(timezone);
+  }
+
+  return d;
 }
 
 export function newDateWithOffset(utcOffset) {
@@ -365,14 +371,10 @@ export function isDayDisabled(
 export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {
-    // if (
-    //   disabledTimes[i].get("hours") === time.get("hours") &&
-    //   disabledTimes[i].get("minutes") === time.get("minutes")
-    // ) {
-    //   return true;
-    // }
+    const item = disabledTimes[i].clone().set("second", 0);
+    const baseTime = time.clone().set("second", 0);
 
-    if (disabledTimes[i].clone().isSame(time.clone())) {
+    if (item.isSame(baseTime)) {
       return true;
     }
   }
@@ -384,23 +386,6 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
   if (!minTime || !maxTime) {
     throw new Error("Both minTime and maxTime props required");
   }
-
-  // const base = moment()
-  //   .hours(0)
-  //   .minutes(0)
-  //   .seconds(0);
-  // const baseTime = base
-  //   .clone()
-  //   .hours(time.get("hours"))
-  //   .minutes(time.get("minutes"));
-  // const min = base
-  //   .clone()
-  //   .hours(minTime.get("hours"))
-  //   .minutes(minTime.get("minutes"));
-  // const max = base
-  //   .clone()
-  //   .hours(maxTime.get("hours"))
-  //   .minutes(maxTime.get("minutes"));
 
   const baseTime = time.clone().set("second", 0);
   const min = minTime.clone().set("second", 0);
