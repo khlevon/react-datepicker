@@ -365,10 +365,14 @@ export function isDayDisabled(
 export function isTimeDisabled(time, disabledTimes) {
   const l = disabledTimes.length;
   for (let i = 0; i < l; i++) {
-    if (
-      disabledTimes[i].get("hours") === time.get("hours") &&
-      disabledTimes[i].get("minutes") === time.get("minutes")
-    ) {
+    // if (
+    //   disabledTimes[i].get("hours") === time.get("hours") &&
+    //   disabledTimes[i].get("minutes") === time.get("minutes")
+    // ) {
+    //   return true;
+    // }
+
+    if (disabledTimes[i].clone().isSame(time.clone())) {
       return true;
     }
   }
@@ -381,22 +385,26 @@ export function isTimeInDisabledRange(time, { minTime, maxTime }) {
     throw new Error("Both minTime and maxTime props required");
   }
 
-  const base = moment()
-    .hours(0)
-    .minutes(0)
-    .seconds(0);
-  const baseTime = base
-    .clone()
-    .hours(time.get("hours"))
-    .minutes(time.get("minutes"));
-  const min = base
-    .clone()
-    .hours(minTime.get("hours"))
-    .minutes(minTime.get("minutes"));
-  const max = base
-    .clone()
-    .hours(maxTime.get("hours"))
-    .minutes(maxTime.get("minutes"));
+  // const base = moment()
+  //   .hours(0)
+  //   .minutes(0)
+  //   .seconds(0);
+  // const baseTime = base
+  //   .clone()
+  //   .hours(time.get("hours"))
+  //   .minutes(time.get("minutes"));
+  // const min = base
+  //   .clone()
+  //   .hours(minTime.get("hours"))
+  //   .minutes(minTime.get("minutes"));
+  // const max = base
+  //   .clone()
+  //   .hours(maxTime.get("hours"))
+  //   .minutes(maxTime.get("minutes"));
+
+  const baseTime = time.clone().set("second", 0);
+  const min = minTime.clone().set("second", 0);
+  const max = maxTime.clone().set("second", 0);
 
   return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
 }
