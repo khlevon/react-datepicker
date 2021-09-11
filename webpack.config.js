@@ -10,6 +10,10 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.json$/,
+        loader: "json-loader"
+      },
+      {
         test: /\.jsx?$/,
         loader: "babel",
         exclude: /node_modules/
@@ -42,6 +46,14 @@ module.exports = {
         commonjs2: "moment",
         commonjs: "moment",
         amd: "moment"
+      }
+    },
+    {
+      "moment-timezone": {
+        root: "moment-timezone",
+        commonjs2: "moment-timezone",
+        commonjs: "moment-timezone",
+        amd: "moment-timezone"
       }
     },
     {
