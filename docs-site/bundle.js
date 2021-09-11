@@ -15659,7 +15659,8 @@
     },
     /* 53 */
     /***/ function(module, exports) {
-      module.exports = /**
+      module.exports
+      /**
        * Known issues:
        *
        * - invalid hex string literals will be recognized as a double quoted strings
@@ -15673,7 +15674,7 @@
        *
        * - special token sequence rule is not strictly following D grammar (anything following #line
        *   up to the end of line is matched as special token sequence)
-       */ function(hljs) {
+       */ = function(hljs) {
         /**
          * Language keywords
          *
@@ -19614,8 +19615,7 @@
     },
     /* 87 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) {
-        // TODO support filter tags like :javascript, support inline HTML
+      module.exports = function(hljs) { // TODO support filter tags like :javascript, support inline HTML
         return {
           case_insensitive: true,
           contains: [
@@ -29709,8 +29709,7 @@
     },
     /* 150 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) {
-        // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
+      module.exports = function(hljs) { // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
         var STRINGS = {
           // PB IDE color: #0080FF (Azure Radiance)
           className: "string",
@@ -38860,10 +38859,14 @@
       function isTimeDisabled(time, disabledTimes) {
         var l = disabledTimes.length;
         for (var i = 0; i < l; i++) {
-          if (
-            disabledTimes[i].get("hours") === time.get("hours") &&
-            disabledTimes[i].get("minutes") === time.get("minutes")
-          ) {
+          // if (
+          //   disabledTimes[i].get("hours") === time.get("hours") &&
+          //   disabledTimes[i].get("minutes") === time.get("minutes")
+          // ) {
+          //   return true;
+          // }
+
+          if (disabledTimes[i].clone().isSame(time.clone())) {
             return true;
           }
         }
@@ -38879,22 +38882,26 @@
           throw new Error("Both minTime and maxTime props required");
         }
 
-        var base = (0, _moment2.default)()
-          .hours(0)
-          .minutes(0)
-          .seconds(0);
-        var baseTime = base
-          .clone()
-          .hours(time.get("hours"))
-          .minutes(time.get("minutes"));
-        var min = base
-          .clone()
-          .hours(minTime.get("hours"))
-          .minutes(minTime.get("minutes"));
-        var max = base
-          .clone()
-          .hours(maxTime.get("hours"))
-          .minutes(maxTime.get("minutes"));
+        // const base = moment()
+        //   .hours(0)
+        //   .minutes(0)
+        //   .seconds(0);
+        // const baseTime = base
+        //   .clone()
+        //   .hours(time.get("hours"))
+        //   .minutes(time.get("minutes"));
+        // const min = base
+        //   .clone()
+        //   .hours(minTime.get("hours"))
+        //   .minutes(minTime.get("minutes"));
+        // const max = base
+        //   .clone()
+        //   .hours(maxTime.get("hours"))
+        //   .minutes(maxTime.get("minutes"));
+
+        var baseTime = time.clone().set("second", 0);
+        var min = minTime.clone().set("second", 0);
+        var max = maxTime.clone().set("second", 0);
 
         return !(baseTime.isSameOrAfter(min) && baseTime.isSameOrBefore(max));
       }
