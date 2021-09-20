@@ -15462,8 +15462,7 @@
     },
     /* 91 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) {
-        // TODO support filter tags like :javascript, support inline HTML
+      module.exports = function(hljs) { // TODO support filter tags like :javascript, support inline HTML
         return {
           case_insensitive: true,
           contains: [
@@ -21403,8 +21402,7 @@
     },
     /* 150 */
     /***/ function(module, exports) {
-      module.exports = function(hljs) {
-        // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
+      module.exports = function(hljs) { // Base deafult colors in PB IDE: background: #FFFFDF; foreground: #000000;
         var STRINGS = {
           // PB IDE color: #0080FF (Azure Radiance)
           className: "string",
@@ -52831,10 +52829,11 @@
 
               _this.props.onChange(time);
             }),
-            (_this.liClasses = function(time, currH, currM) {
+            (_this.liClasses = function(time, currD, currH, currM) {
               var classes = ["react-datepicker__time-list-item"];
 
               if (
+                currD === (0, _date_utils.getDay)(time) &&
                 currH === (0, _date_utils.getHour)(time) &&
                 currM === (0, _date_utils.getMinute)(time)
               ) {
@@ -52875,11 +52874,16 @@
               var activeTime = _this.props.selected
                 ? _this.props.selected
                 : (0, _date_utils.newDate)();
+              var currD = (0, _date_utils.getDay)(activeTime);
               var currH = (0, _date_utils.getHour)(activeTime);
               var currM = (0, _date_utils.getMinute)(activeTime);
-              var base = (0, _date_utils.getStartOfDay)(
-                (0, _date_utils.newDate)(undefined, _this.props.timezone)
-              );
+              var base = activeTime
+                ? (0, _date_utils.getStartOfDay)(
+                    (0, _date_utils.cloneDate)(activeTime)
+                  )
+                : (0, _date_utils.getStartOfDay)(
+                    (0, _date_utils.newDate)(undefined, _this.props.timezone)
+                  );
               var multiplier = 1440 / intervals;
               var sortedInjectTimes =
                 _this.props.injectTimes &&
@@ -52911,7 +52915,7 @@
                   {
                     key: i,
                     onClick: _this.handleClick.bind(_this, time),
-                    className: _this.liClasses(time, currH, currM)
+                    className: _this.liClasses(time, currD, currH, currM)
                   },
                   (0, _date_utils.formatDate)(time, format)
                 );

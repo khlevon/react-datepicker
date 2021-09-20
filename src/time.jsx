@@ -10,7 +10,8 @@ import {
   formatDate,
   isTimeInDisabledRange,
   isTimeDisabled,
-  timesToInjectAfter
+  timesToInjectAfter,
+  getDay
 } from "./date_utils";
 
 export default class Time extends React.Component {
@@ -62,10 +63,14 @@ export default class Time extends React.Component {
     this.props.onChange(time);
   };
 
-  liClasses = (time, currH, currM) => {
+  liClasses = (time, currD, currH, currM) => {
     let classes = ["react-datepicker__time-list-item"];
 
-    if (currH === getHour(time) && currM === getMinute(time)) {
+    if (
+      currD === getDay(time) &&
+      currH === getHour(time) &&
+      currM === getMinute(time)
+    ) {
       classes.push("react-datepicker__time-list-item--selected");
     }
     if (
@@ -93,9 +98,12 @@ export default class Time extends React.Component {
     const format = this.props.format ? this.props.format : "hh:mm A";
     const intervals = this.props.intervals;
     const activeTime = this.props.selected ? this.props.selected : newDate();
+    const currD = getDay(activeTime);
     const currH = getHour(activeTime);
     const currM = getMinute(activeTime);
-    let base = getStartOfDay(newDate(undefined, this.props.timezone));
+    let base = activeTime
+      ? getStartOfDay(cloneDate(activeTime))
+      : getStartOfDay(newDate(undefined, this.props.timezone));
     const multiplier = 1440 / intervals;
     const sortedInjectTimes =
       this.props.injectTimes &&
@@ -122,7 +130,7 @@ export default class Time extends React.Component {
       <li
         key={i}
         onClick={this.handleClick.bind(this, time)}
-        className={this.liClasses(time, currH, currM)}
+        className={this.liClasses(time, currD, currH, currM)}
       >
         {formatDate(time, format)}
       </li>
